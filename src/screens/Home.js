@@ -1,12 +1,12 @@
-import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
+import { logUserOut } from "../apollo";
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <div>
-      <Helmet>
-        <title>Home</title>
-      </Helmet>
-      <h1>Home</h1>
+      <h1>Welcom we did it!</h1>
+      <button onClick={() => logUserOut(navigate)}>log out now!</button>
     </div>
   );
 }

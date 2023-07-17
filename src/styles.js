@@ -2,15 +2,15 @@ import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
 export const lightTheme = {
-  fontColor: "rgba(38, 38, 38, 1)",
-  bgColor: "white",
+  fontColor: "rgb(38, 38, 38)",
+  bgColor: "#FAFAFA",
   accent: "#0095f6",
   borderColor: "rgb(219, 219, 219)",
 };
 
 export const darkTheme = {
   fontColor: "white",
-  bgColor: "#2c2c2c",
+  bgColor: "rgb(38, 38, 38)",
 };
 
 export const GlobalStyles = createGlobalStyle`
