@@ -41,7 +41,10 @@ export const disableDarkMode = () => {
 export const currentPageVar = makeVar(1);
 
 const httpLink = createUploadLink({
-  uri: "http://localhost:4000/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://nomadcoffee-backend-redbas3.koyeb.app/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
