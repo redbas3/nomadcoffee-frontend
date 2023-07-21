@@ -135,7 +135,7 @@ function CoffeeShop() {
               <Link to={routes.home}>
                 <IoIosArrowBack size={24} />
               </Link>
-              {currentUserID.toString() === coffeeShop.user.id ? (
+              {currentUserID === coffeeShop.user.id ? (
                 <div>
                   <Link to={`${routes.editCoffeeShop}/${id}`}>
                     <CiEdit size={24} />

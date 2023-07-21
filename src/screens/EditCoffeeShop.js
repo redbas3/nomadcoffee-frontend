@@ -126,7 +126,7 @@ function EditCoffeeShop() {
     }
   }, [data, setValue]);
 
-  if (currentUserID.toString() !== id) {
+  if (currentUserID !== +id) {
     navigate(routes.home);
     return;
   }

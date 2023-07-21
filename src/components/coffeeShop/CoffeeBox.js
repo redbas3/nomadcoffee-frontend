@@ -113,7 +113,7 @@ function CoffeeBox({ coffeeShop, readMode }) {
           >
             상세 보기
           </Btn>
-          {currentUserID.toString() === coffeeShop.user.id ? (
+          {currentUserID === coffeeShop.user.id ? (
             <Btn
               onClick={() =>
                 navigate(`${routes.editCoffeeShop}/${coffeeShop.id}`)
