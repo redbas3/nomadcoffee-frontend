@@ -9,7 +9,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { styled } from "styled-components";
 import { useEffect } from "react";
 import { COFFEESHOPS_QUERY } from "./Home";
-import { currentPageVar } from "../apollo";
+import { currentPageVar, currentUserIDVar } from "../apollo";
 
 const COFFEESHOP_QUERY = gql`
   query SeeCoffeeShop($id: Int!) {
@@ -63,11 +63,16 @@ const FromWrap = styled.div`
 `;
 
 function EditCoffeeShop() {
+  const currentUserID = currentUserIDVar();
   const currentPage = currentPageVar();
   const navigate = useNavigate();
   const {
     params: { id },
   } = useMatch(`${routes.editCoffeeShop}/:id`);
+
+  if (currentUserID !== id) {
+    navigate(routes.home);
+  }
 
   const {
     register,
