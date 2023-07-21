@@ -94,7 +94,7 @@ function EditCoffeeShop() {
     mode: "onChange",
   });
 
-  const [editCoffeeShop, { loadingEdit }] = useMutation(
+  const [editCoffeeShop, { loading: loadingEdit }] = useMutation(
     EDIT_COFFEESHOP_MUTATION,
     {
       onCompleted,
