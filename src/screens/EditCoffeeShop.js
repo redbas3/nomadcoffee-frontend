@@ -70,21 +70,6 @@ function EditCoffeeShop() {
     params: { id },
   } = useMatch(`${routes.editCoffeeShop}/:id`);
 
-  if (currentUserID !== id) {
-    navigate(routes.home);
-  }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    setError,
-    clearErrors,
-    setValue,
-  } = useForm({
-    mode: "onChange",
-  });
-
   const onCompleted = (data) => {
     const {
       editCoffeeShop: { ok, error },
@@ -97,6 +82,18 @@ function EditCoffeeShop() {
 
     navigate(`${routes.coffeeShop}/${id}`);
   };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    setError,
+    clearErrors,
+    setValue,
+  } = useForm({
+    mode: "onChange",
+  });
+
   const [editCoffeeShop, { loadingEdit }] = useMutation(
     EDIT_COFFEESHOP_MUTATION,
     {
@@ -106,6 +103,34 @@ function EditCoffeeShop() {
       ],
     }
   );
+
+  const { loading, error, data } = useQuery(COFFEESHOP_QUERY, {
+    variables: { id: +id },
+  });
+
+  useEffect(() => {
+    if (data) {
+      const { seeCoffeeShop: coffeeShop } = data;
+      setValue("name", coffeeShop.name);
+      setValue("latitude", coffeeShop.latitude);
+      setValue("longitude", coffeeShop.longitude);
+      let categoryStr = "";
+      coffeeShop.categories.map((category) => {
+        categoryStr = categoryStr + category.name + ",";
+        return null;
+      });
+      if (categoryStr) {
+        categoryStr = categoryStr.substring(0, categoryStr.length - 1);
+      }
+      setValue("categories", categoryStr);
+    }
+  }, [data, setValue]);
+
+  if (currentUserID.toString() !== id) {
+    navigate(routes.home);
+    return;
+  }
+
   const onSubmitValid = (data) => {
     if (loadingEdit) {
       return;
@@ -131,29 +156,6 @@ function EditCoffeeShop() {
   const clearLoginError = () => {
     clearErrors("result");
   };
-
-  const { loading, error, data } = useQuery(COFFEESHOP_QUERY, {
-    variables: { id: +id },
-  });
-
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-      const { seeCoffeeShop: coffeeShop } = data;
-      setValue("name", coffeeShop.name);
-      setValue("latitude", coffeeShop.latitude);
-      setValue("longitude", coffeeShop.longitude);
-      let categoryStr = "";
-      coffeeShop.categories.map((category) => {
-        categoryStr = categoryStr + category.name + ",";
-        return null;
-      });
-      if (categoryStr) {
-        categoryStr = categoryStr.substring(0, categoryStr.length - 1);
-      }
-      setValue("categories", categoryStr);
-    }
-  }, [data, setValue]);
 
   if (loading) return null;
   if (error) return `Error! ${error}`;
